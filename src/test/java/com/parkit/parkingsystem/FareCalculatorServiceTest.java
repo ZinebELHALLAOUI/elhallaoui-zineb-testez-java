@@ -7,6 +7,7 @@ import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.FareCalculatorService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -57,6 +58,7 @@ public class FareCalculatorServiceTest {
         assertEquals(ticket.getPrice(), Fare.BIKE_RATE_PER_HOUR);
     }
 
+    @DisplayName("doit echouer quand le type de vehicule est inconnu")
     @Test
     public void calculateFareUnkownType() {
         Date inTime = new Date();
@@ -70,6 +72,7 @@ public class FareCalculatorServiceTest {
         assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket));
     }
 
+    @DisplayName("doit echouer quand le temps d'entrer d'un velo est supérieur au temps de sortie")
     @Test
     public void calculateFareBikeWithFutureInTime() {
         Date inTime = new Date();
@@ -83,6 +86,7 @@ public class FareCalculatorServiceTest {
         assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket));
     }
 
+    @DisplayName("le prix du ticket d'un velo doit être 0.75 quand il se gare pendant 45 minutes")
     @Test
     public void calculateFareBikeWithLessThanOneHourParkingTime() {
         Date inTime = new Date();
@@ -94,9 +98,10 @@ public class FareCalculatorServiceTest {
         ticket.setOutTime(outTime);
         ticket.setParkingSpot(parkingSpot);
         fareCalculatorService.calculateFare(ticket);
-        assertEquals((0.75 * Fare.BIKE_RATE_PER_HOUR), ticket.getPrice());
+        assertEquals(0.75, ticket.getPrice());
     }
 
+    @DisplayName("le prix du ticket d'une voiture doit être 1.125 quand elle se gare pendant 45 minutes")
     @Test
     public void calculateFareCarWithLessThanOneHourParkingTime() {
         //given
@@ -114,9 +119,10 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket);
 
         //then
-        assertEquals((0.75 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice());
+        assertEquals(1.125, ticket.getPrice());
     }
 
+    @DisplayName("le prix du ticket d'une voiture doit être 36 quand elle se gare pendant 24 heures")
     @Test
     public void calculateFareCarWithMoreThanADayParkingTime() {
         Date inTime = new Date();
@@ -128,9 +134,10 @@ public class FareCalculatorServiceTest {
         ticket.setOutTime(outTime);
         ticket.setParkingSpot(parkingSpot);
         fareCalculatorService.calculateFare(ticket);
-        assertEquals((24 * Fare.CAR_RATE_PER_HOUR), ticket.getPrice());
+        assertEquals(36, ticket.getPrice());
     }
 
+    @DisplayName("le ticket doit être 0 pour une voiture qui s'est garée pendant moins de 30 minutes")
     @Test
     public void calculateFareCarWithLessThan30minutesParkingTime() {
         //given
@@ -150,6 +157,7 @@ public class FareCalculatorServiceTest {
         assertEquals(0, ticket.getPrice());
     }
 
+    @DisplayName("le ticket doit être 0 pour un vélo qui s'est garé pendant moins de 30 minutes")
     @Test
     public void calculateFareBikeWithLessThan30minutesParkingTime() {
         //given
