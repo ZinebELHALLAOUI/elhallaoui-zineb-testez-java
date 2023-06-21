@@ -6,6 +6,10 @@ import com.parkit.parkingsystem.model.Ticket;
 public class FareCalculatorService {
 
     public void calculateFare(Ticket ticket) {
+        if (ticket == null) {
+            throw new IllegalArgumentException("Ticket can not be null value");
+        }
+
         if ((ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime()))) {
             throw new IllegalArgumentException("Out time provided is incorrect:" + ticket.getOutTime().toString());
         }
@@ -30,7 +34,15 @@ public class FareCalculatorService {
                 break;
             }
             default:
-                throw new IllegalArgumentException("Unkown Parking Type");
+                throw new IllegalArgumentException("Unknown Parking Type");
+        }
+    }
+
+    public void calculateFare(Ticket ticket, boolean discount) {
+        this.calculateFare(ticket);
+        if (discount) {
+            double standardPrice = ticket.getPrice();
+            ticket.setPrice(standardPrice * 0.95d);// discount of 5%
         }
     }
 }
