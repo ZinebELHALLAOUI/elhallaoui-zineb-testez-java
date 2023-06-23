@@ -8,6 +8,7 @@ import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -34,7 +35,6 @@ public class ParkingServiceTest {
     @BeforeEach
     private void setUpPerTest() {
         try {
-
             parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,6 +43,7 @@ public class ParkingServiceTest {
     }
 
     @Test
+    @DisplayName("Doit vérifier que la procédure de la sortie d'une voiture se passe comme prévu")
     public void processExitingVehicleTest() throws Exception {
         //given
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
@@ -64,6 +65,7 @@ public class ParkingServiceTest {
     }
 
     @Test
+    @DisplayName("Doit verifier que le procédure de la sortie d'une voiture se passe comme prévu")
     public void testProcessIncomingVehicle() {
         //given
         when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
@@ -79,6 +81,7 @@ public class ParkingServiceTest {
     }
 
     @Test
+    @DisplayName("Doit verifier que la place de parking n'a pas été modifiée au le moment que le ticket égalament n'as pas été modifier ")
     public void processExitingVehicleTestUnableUpdate() throws Exception {
         //given
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
@@ -100,9 +103,10 @@ public class ParkingServiceTest {
     }
 
     @Test
+    @DisplayName("Doit vérifier la disponibilité d'une place de parking")
     public void testGetNextParkingNumberIfAvailable() {
         //given
-        when(inputReaderUtil.readSelection()).thenReturn(2);
+        when(inputReaderUtil.readSelection()).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
 
         //when
@@ -114,6 +118,7 @@ public class ParkingServiceTest {
     }
 
     @Test
+    @DisplayName("Doit verifier qu'il n y a pas de place disponibles dans le parking")
     public void testGetNextParkingNumberIfAvailableParkingNumberNotFound() {
         //given
         when(inputReaderUtil.readSelection()).thenReturn(1);
@@ -128,6 +133,7 @@ public class ParkingServiceTest {
     }
 
     @Test
+    @DisplayName("Doit vérifier qu'il n y a pas de places de parking disponible si le ParkingType saisi par l'utilisateur est erroné")
     public void testGetNextParkingNumberIfAvailableParkingNumberWrongArgument() {
         //given
         when(inputReaderUtil.readSelection()).thenReturn(10);
