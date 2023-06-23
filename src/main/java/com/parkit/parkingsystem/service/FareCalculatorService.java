@@ -5,6 +5,8 @@ import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
 
+    public static final double FIVE_PERCENT_DISCOUNT = 0.95d;
+
     public void calculateFare(Ticket ticket) {
         if (ticket == null) {
             throw new IllegalArgumentException("Ticket can not be null value");
@@ -42,7 +44,7 @@ public class FareCalculatorService {
         this.calculateFare(ticket);
         if (discount) {
             double standardPrice = ticket.getPrice();
-            ticket.setPrice(standardPrice * 0.95d);// discount of 5%
+            ticket.setPrice(standardPrice * FIVE_PERCENT_DISCOUNT);// discount of 5%
         }
     }
 }

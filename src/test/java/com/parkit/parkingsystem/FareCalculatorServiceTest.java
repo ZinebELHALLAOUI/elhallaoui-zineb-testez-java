@@ -210,7 +210,7 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket, true);
 
         //then
-        assertEquals(1.06875, ticket.getPrice(),0.000001d);
+        assertEquals(1.06875, ticket.getPrice(), 0.000001d);
     }
 
     @Test
@@ -230,7 +230,7 @@ public class FareCalculatorServiceTest {
         fareCalculatorService.calculateFare(ticket, true);
 
         //then
-        assertEquals(ticket.getPrice(), 0.7125,0.000001d);
+        assertEquals(ticket.getPrice(), 0.7125, 0.000001d);
 
     }
 }
