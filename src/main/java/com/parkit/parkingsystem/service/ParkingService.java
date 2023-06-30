@@ -60,6 +60,10 @@ public class ParkingService {
         try {
             String vehicleRegNumber = getVehichleRegNumber();
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
+            if (ticket == null) {
+                System.out.println("Ce véhicule n'existe pas dans le parking");
+                return;
+            }
             Date outTime = new Date();
             ticket.setOutTime(outTime);
             boolean applyDiscount = ticketDAO.getNbTicket(vehicleRegNumber) >= 2;
@@ -87,10 +91,10 @@ public class ParkingService {
             if (parkingNumber > 0) {
                 parkingSpot = new ParkingSpot(parkingNumber, parkingType, true);
             } else {
-                throw new Exception("Error fetching parking number from DB. Parking slots might be full");
+                System.out.println("Aucune place de parking n'est disponible");
             }
         } catch (IllegalArgumentException ie) {
-            logger.error("Error parsing user input for type of vehicle", ie);
+            System.out.println("Type de véhicule choisi n'existe pas");
         } catch (Exception e) {
             logger.error("Error fetching next available parking slot", e);
         }
@@ -115,7 +119,6 @@ public class ParkingService {
                 return ParkingType.BIKE;
             }
             default: {
-                System.out.println("Incorrect input provided");
                 throw new IllegalArgumentException("Entered input is invalid");
             }
         }
