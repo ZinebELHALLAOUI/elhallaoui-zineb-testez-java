@@ -52,6 +52,7 @@ public class ParkingDataBaseIT {
     }
 
     @Test
+    @DisplayName("Doit vérifier si le ticket est enregistré dans la base et que la place de parking a été bien réservée ")
     public void testParkingACar() {
         //given
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -63,11 +64,12 @@ public class ParkingDataBaseIT {
         Ticket ticket = ticketDAO.getTicket("ABCDEF");
         assertNotNull(ticket); // le ticket exist dans la base
         int nextAvailableSlot = parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR); // recupére la prochain numero de place disponible
-        assertEquals(nextAvailableSlot, 2); // le prochain numero de place disponible doit-être different du numero 1, dans notre exemple c'est le numero de place 2 qui sera le suivant
+        assertEquals(nextAvailableSlot, 2); // le prochain numero de place disponible doit-être different du numero 1. Dans notre exemple c'est le numero de place "2" qui sera le suivant
 
     }
 
     @Test
+    @DisplayName("Doit vérifier si le OutTime est valorisé et le prix est different de zéro ")
     public void testParkingLotExit() {
         //given
         Ticket ticket = new Ticket();
@@ -85,11 +87,12 @@ public class ParkingDataBaseIT {
 
         //then
         Ticket ticketAfter = ticketDAO.getTicket("ABCDEF");
-        assertNotNull(ticketAfter.getOutTime());// verifie si le outime est valorisé dans la base de données
+        assertNotNull(ticketAfter.getOutTime());// verifie si le out time est valorisé dans la base de données
         assertTrue(ticketAfter.getPrice() != 0); // verifie si le prix est different de zero
     }
 
     @Test
+    @DisplayName("Doit vérifier que la remise de 5% est bien appliquée")
     public void testParkingLotExitRecurringUser() {
         //given
         Ticket ticket1 = new Ticket();
