@@ -1,5 +1,5 @@
 # Parking System
-A command line app for managing the parking system. 
+A command line app for managing the parking system.
 This app uses Java to run and stores the data in Mysql DB.
 
 ## Getting Started
@@ -11,8 +11,8 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them
 
 - Java 11
-- Maven 3.6.2
-- Mysql 8.0.17
+- Maven 3.9.2
+- Mysql 5.7.24
 
 ### Installing
 
@@ -39,6 +39,8 @@ Post installation of MySQL, Java and Maven, you will have to set up the tables a
 For this, please run the sql commands present in the `Data.sql` file under the `resources` folder in the code base.
 
 Finally, you will be ready to import the code into an IDE of your choice and run the App.java to launch the application.
+### How to run App
+After building the app , excute the command line : java -jar target/parking-system-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 ### Testing
 
@@ -48,7 +50,7 @@ To run the unit tests from maven, go to the folder that contains the pom.xml fil
 
 `mvn test`
 
-To run the unit tests and the integration test from maven, go to the folder that contains the pom.xml file and execute the below command. 
+To run the unit tests and the integration test from maven, go to the folder that contains the pom.xml file and execute the below command.
 
 `mvn verify`
 
